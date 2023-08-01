@@ -3,8 +3,8 @@ package capture
 import (
 	"fmt"
 	"github.com/google/gopacket"
-	"github.com/vela-ssoc/vela-kit/audit"
 	cond "github.com/vela-ssoc/vela-cond"
+	"github.com/vela-ssoc/vela-kit/audit"
 	"github.com/vela-ssoc/vela-kit/kind"
 	"github.com/vela-ssoc/vela-kit/lua"
 	risk "github.com/vela-ssoc/vela-risk"
@@ -79,7 +79,6 @@ func (box *Box) Index(L *lua.LState, key string) lua.LValue {
 		return lua.S2L(box.layerT.String())
 	case "debug":
 		return lua.NewFunction(box.debugL)
-
 	case "risk":
 		return lua.NewFunction(box.ToRiskL)
 
@@ -147,7 +146,6 @@ func (box *Box) ToRiskL(L *lua.LState) int {
 
 func (box *Box) ref() *cond.Cond {
 	f := fmt.Sprintf
-
 	return cond.New(
 		f("local_addr = %s", box.cnn.SrcIP),
 		f("local_port = %d", box.cnn.SrcPort),

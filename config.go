@@ -22,7 +22,7 @@ const (
 type dnsConfig struct {
 	ignore []*cond.Cond
 	filter []*cond.Cond
-	pipe   *pipe.Px
+	pipe   *pipe.Chains
 	to     lua.Writer
 	vsh    *vswitch.Switch
 }
@@ -39,7 +39,7 @@ type config struct {
 	rate   *RateConfig
 	ignore []*cond.Cond
 	filter []*cond.Cond
-	pipe   *pipe.Px
+	pipe   *pipe.Chains
 	to     lua.Writer
 	vsh    *vswitch.Switch
 	dns    *dnsConfig
@@ -80,7 +80,7 @@ func newConfig(L *lua.LState) *config {
 func (cfg *config) BuildBPF(v string) error {
 	var r bpfReply
 	cfg.bpfVal = v
-	err := xEnv.PostJSON("/v1/bpf/compile", body{Expr: v}, &r)
+	err := xEnv.JSON("/api/v1/broker/bpf/compile", body{Expr: v}, &r)
 	cfg.bpf = r.Data
 	return err
 }

@@ -42,7 +42,6 @@ func (i Interface) notIP() bool {
 	}
 
 	return len(addr) == 0
-
 }
 
 func (i Interface) matchIP(cnd cond.Method, val string) bool {

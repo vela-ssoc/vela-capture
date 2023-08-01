@@ -6,7 +6,7 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/google/gopacket/pcap"
-	"github.com/vela-ssoc/vela-kit/execpt"
+	"github.com/vela-ssoc/vela-kit/exception"
 	"github.com/vela-ssoc/vela-kit/lua"
 	"time"
 )
@@ -62,7 +62,7 @@ func (c *capture) SetBPF() error {
 		return nil
 	}
 
-	errs := execpt.New()
+	errs := exception.New()
 	for _, h := range c.handles {
 		if e := h.Ehh.SetBPFFilter(c.cfg.bpfVal); e != nil {
 			errs.Try(h.dev.Name, e)

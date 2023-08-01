@@ -40,7 +40,12 @@ func addressNotLoopback(sep string) string {
 }
 
 func TcpOutboundBPF() string {
-	return fmt.Sprintf("tcp and tcp[tcpflags] == tcp-syn and src host %s and host not %s", addressNotLoopback(" or "), xEnv.Broker())
+	ip, _ := xEnv.Broker()
+	if ip == nil {
+		return fmt.Sprintf("tcp and tcp[tcpflags] == tcp-syn and src host %s", addressNotLoopback(" or "))
+	}
+
+	return fmt.Sprintf("tcp and tcp[tcpflags] == tcp-syn and src host %s and host not %s", addressNotLoopback(" or "), ip.String())
 }
 
 func UdpOutboundBPF() string {
